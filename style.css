@@ -1,0 +1,382 @@
+:root {
+    --bg-color: #f0f0f0;
+    --widget-bg-color: #fff;
+    --text-color: #333;
+    --border-color: #eee;
+    --input-border-color: #ccc;
+    --today-bg-color: #f0f0f0;
+    --completed-task-color: #aaa;
+    --delete-btn-color: #ff0000;
+    --add-task-btn-bg: #4CAF50;
+    --send-gemini-btn-bg: #007bff;
+    --user-message-bg: #dcf8c6;
+    --model-message-bg: #f1f0f0;
+    --button-text-color: #fff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --widget-bg-color: #1e1e1e;
+    --text-color: #e0e0e0;
+    --border-color: #333;
+    --input-border-color: #555;
+    --today-bg-color: #333;
+    --completed-task-color: #777;
+    --user-message-bg: #264653;
+    --model-message-bg: #3a3a3a;
+    --shadow-color: rgba(255, 255, 255, 0.1);
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.controls-container {
+    padding: 10px 20px;
+    text-align: right;
+}
+
+.hidden {
+    display: none;
+}
+
+#toggle-dark-mode-btn, #lock-btn, #work-mode-btn, #exit-work-mode-btn {
+    padding: 8px 12px;
+    border: 1px solid var(--input-border-color);
+    background-color: var(--widget-bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+#dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+.widget {
+    background-color: var(--widget-bg-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--shadow-color);
+    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+}
+
+#clock {
+    font-size: 4.5rem;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+#calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#calendar th, #calendar td {
+    text-align: center;
+    padding: 8px; /* Reduced padding to prevent overflow */
+    position: relative;
+}
+
+#calendar .today {
+    font-weight: bold;
+    color: red;
+}
+
+#calendar .today::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px;
+    height: 28px;
+    border: 2px solid red;
+    border-radius: 50%;
+}
+
+#tasks h2, #gemini h2, #last-activation h2, #stopwatch h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+#task-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#task-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+#task-list li:last-child {
+    border-bottom: none;
+}
+
+.task-text.completed {
+    text-decoration: line-through;
+    color: var(--completed-task-color);
+}
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: var(--delete-btn-color);
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.task-input-container, .gemini-input-container {
+    display: flex;
+    margin-top: 15px;
+}
+
+#task-input, #gemini-input {
+    flex-grow: 1;
+    border: 1px solid var(--input-border-color);
+    padding: 8px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+#task-input {
+    border-radius: 5px 0 0 5px;
+}
+
+#gemini-input {
+    border-radius: 5px 0 0 5px;
+}
+
+#add-task-btn {
+    border: none;
+    background-color: var(--add-task-btn-bg);
+    color: var(--button-text-color);
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+}
+
+.lock-screen-input-container {
+    margin-top: 20px;
+    display: flex;
+}
+
+#lock-screen-password {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid #fff;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px 0 0 5px;
+    font-size: 1rem;
+}
+
+#lock-screen-password::placeholder {
+    color: #ccc;
+}
+
+#unlock-btn {
+    padding: 10px 20px;
+    border: 1px solid #fff;
+    background: rgba(255, 255, 255, 0.3);
+    color: #fff;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+    font-size: 1rem;
+}
+
+.shake {
+    animation: shake 0.5s;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* --- Apple Music Placeholder Styles --- */
+#apple-music-placeholder {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.music-logo {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+#apple-music-placeholder h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+#apple-music-placeholder p {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: var(--completed-task-color); /* Using this for a muted text effect */
+}
+
+.styled-link-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--send-gemini-btn-bg); /* Re-using a button color */
+    color: var(--button-text-color);
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.styled-link-btn:hover {
+    opacity: 0.9;
+}
+
+#stopwatch-display {
+    font-size: 3.5rem;
+    font-weight: 300;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+/* --- Work Mode Styles --- */
+
+/* Hide work mode widgets by default */
+#stopwatch, #apple-music-placeholder {
+    display: none;
+}
+
+/* Hide exit button by default */
+#exit-work-mode-btn {
+    display: none;
+}
+
+
+/* When work mode is active */
+body.work-mode-active .controls-container #work-mode-btn,
+body.work-mode-active .controls-container #lock-btn {
+    display: none;
+}
+
+body.work-mode-active .controls-container #exit-work-mode-btn {
+    display: inline-block;
+}
+
+body.work-mode-active #dashboard #calendar,
+body.work-mode-active #dashboard #gemini,
+body.work-mode-active #dashboard #last-activation {
+    display: none;
+}
+
+body.work-mode-active #dashboard #stopwatch,
+body.work-mode-active #dashboard #apple-music-placeholder {
+    display: flex; /* Use flex to be consistent with other widgets */
+}
+
+/* Lock Screen */
+#lock-screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s;
+}
+
+#lock-screen-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#lock-screen-clock {
+    font-size: 8rem;
+    font-weight: 300;
+}
+
+#lock-screen-message {
+    font-size: 2rem;
+    margin-top: 20px;
+}
+
+#gemini-chat-history {
+    height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--bg-color);
+}
+
+.gemini-message {
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+}
+
+.user-message {
+    background-color: var(--user-message-bg);
+    color: var(--text-color);
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+}
+
+body.dark-mode .user-message {
+    color: #e0e0e0;
+}
+
+.model-message {
+    background-color: var(--model-message-bg);
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+}
+
+#send-to-gemini-btn {
+    border: none;
+    background-color: var(--send-gemini-btn-bg);
+    color: var(--button-text-color);
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 0 5px 5px 0;
+}

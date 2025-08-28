@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@google/generative-ai/dist/index.iife.js"></script>
+</head>
+<body>
+    <div class="controls-container">
+        <button id="toggle-dark-mode-btn">Toggle Night Mode</button>
+        <button id="lock-btn">Lock</button>
+        <button id="work-mode-btn">Work Mode</button>
+        <button id="exit-work-mode-btn" class="hidden">Exit Work Mode</button>
+    </div>
+    <div id="dashboard">
+        <div id="clock" class="widget"></div>
+        <div id="calendar" class="widget"></div>
+        <div id="tasks" class="widget">
+            <h2>Tasks</h2>
+            <ul id="task-list"></ul>
+            <div class="task-input-container">
+                <input type="text" id="task-input" placeholder="Add a new task...">
+                <button id="add-task-btn">+</button>
+            </div>
+        </div>
+        <div id="gemini" class="widget">
+            <h2>Gemini Assistant</h2>
+            <div id="gemini-chat-history"></div>
+            <div class="gemini-input-container">
+                <input type="text" id="gemini-input" placeholder="Ask Gemini anything...">
+                <button id="send-to-gemini-btn">Send</button>
+            </div>
+        </div>
+        <div id="last-activation" class="widget">
+            <h2>Last Work Session</h2>
+            <p id="last-activation-time">Never</p>
+        </div>
+        <div id="stopwatch" class="widget hidden">
+            <h2>Stopwatch</h2>
+            <div id="stopwatch-display">00:00:00</div>
+        </div>
+        <div id="apple-music-placeholder" class="widget hidden">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Apple_Music_icon.svg" alt="Apple Music Logo" class="music-logo">
+            <h3>Apple Music</h3>
+            <p>Your music, when you need to focus.</p>
+            <a href="https://music.apple.com" target="_blank" class="styled-link-btn">Open Player</a>
+        </div>
+    </div>
+
+    <div id="lock-screen-overlay" class="hidden">
+        <div id="lock-screen-clock"></div>
+        <p id="lock-screen-message">Have a great day!</p>
+        <div class="lock-screen-input-container">
+            <input type="password" id="lock-screen-password" placeholder="Password">
+            <button id="unlock-btn">Unlock</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
