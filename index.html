@@ -19,7 +19,16 @@
     </div>
     <div id="dashboard">
         <div id="clock" class="widget"></div>
-        <div id="calendar" class="widget"></div>
+        <div id="calendar" class="widget">
+            <div class="calendar-header">
+                <button id="prev-year-btn">&lt;&lt;</button>
+                <button id="prev-month-btn">&lt;</button>
+                <h2 id="calendar-month-year"></h2>
+                <button id="next-month-btn">&gt;</button>
+                <button id="next-year-btn">&gt;&gt;</button>
+            </div>
+            <table id="calendar-grid"></table>
+        </div>
         <div id="tasks" class="widget">
             <h2>Tasks</h2>
             <ul id="task-list"></ul>

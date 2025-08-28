@@ -98,6 +98,32 @@ body {
     flex-grow: 1;
 }
 
+#calendar {
+    grid-column: span 3;
+    min-width: 940px;
+}
+
+#calendar .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+#calendar .calendar-header button {
+    background: none;
+    border: 1px solid var(--input-border-color);
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#calendar #calendar-month-year {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
 #calendar table {
     width: 100%;
     border-collapse: collapse;

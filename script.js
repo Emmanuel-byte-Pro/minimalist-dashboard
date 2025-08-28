@@ -40,29 +40,67 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Calendar Widget ---
-    const calendarElement = document.getElementById('calendar');
-    if (calendarElement) {
-        const now = new Date();
-        const month = now.getMonth();
-        const year = now.getFullYear();
+    const calendarMonthYear = document.getElementById('calendar-month-year');
+    const calendarGrid = document.getElementById('calendar-grid');
+    let currentlyDisplayedDate = new Date();
+
+    function updateCalendar() {
+        if (!calendarGrid || !calendarMonthYear) return;
+
+        const today = new Date();
+        const month = currentlyDisplayedDate.getMonth();
+        const year = currentlyDisplayedDate.getFullYear();
+
+        calendarMonthYear.textContent = `${currentlyDisplayedDate.toLocaleString('default', { month: 'long' })} ${year}`;
+
         const firstDayOfMonth = new Date(year, month, 1);
         const lastDayOfMonth = new Date(year, month + 1, 0);
         const firstDayOfWeek = firstDayOfMonth.getDay();
         const totalDaysInMonth = lastDayOfMonth.getDate();
-        let calendarHTML = '<table>';
-        calendarHTML += `<caption>${now.toLocaleString('default', { month: 'long' })} ${year}</caption>`;
-        calendarHTML += '<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr><tr>';
-        for (let i = 0; i < firstDayOfWeek; i++) { calendarHTML += '<td></td>'; }
-        for (let day = 1; day <= totalDaysInMonth; day++) {
-            if ((firstDayOfWeek + day - 1) % 7 === 0 && day > 1) { calendarHTML += '</tr><tr>'; }
-            let cellClass = (day === now.getDate()) ? 'class="today"' : '';
-            calendarHTML += `<td ${cellClass}>${day}</td>`;
+
+        let calendarHTML = '<thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead><tbody>';
+
+        let day = 1;
+        for (let i = 0; i < 6; i++) { // 6 rows for the calendar
+            calendarHTML += '<tr>';
+            for (let j = 0; j < 7; j++) {
+                if (i === 0 && j < firstDayOfWeek) {
+                    calendarHTML += '<td></td>';
+                } else if (day > totalDaysInMonth) {
+                    calendarHTML += '<td></td>';
+                } else {
+                    let cellClass = '';
+                    if (day === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
+                        cellClass = 'class="today"';
+                    }
+                    calendarHTML += `<td ${cellClass}>${day}</td>`;
+                    day++;
+                }
+            }
+            calendarHTML += '</tr>';
         }
-        let emptyCells = (7 - (firstDayOfWeek + totalDaysInMonth) % 7) % 7;
-        for (let i = 0; i < emptyCells; i++) { calendarHTML += '<td></td>'; }
-        calendarHTML += '</tr></table>';
-        calendarElement.innerHTML = calendarHTML;
+        calendarHTML += '</tbody>';
+        calendarGrid.innerHTML = calendarHTML;
     }
+
+    document.getElementById('prev-month-btn').addEventListener('click', () => {
+        currentlyDisplayedDate.setMonth(currentlyDisplayedDate.getMonth() - 1);
+        updateCalendar();
+    });
+    document.getElementById('next-month-btn').addEventListener('click', () => {
+        currentlyDisplayedDate.setMonth(currentlyDisplayedDate.getMonth() + 1);
+        updateCalendar();
+    });
+    document.getElementById('prev-year-btn').addEventListener('click', () => {
+        currentlyDisplayedDate.setFullYear(currentlyDisplayedDate.getFullYear() - 1);
+        updateCalendar();
+    });
+    document.getElementById('next-year-btn').addEventListener('click', () => {
+        currentlyDisplayedDate.setFullYear(currentlyDisplayedDate.getFullYear() + 1);
+        updateCalendar();
+    });
+
+    updateCalendar();
 
     // --- Task List Widget ---
     const taskList = document.getElementById('task-list');
