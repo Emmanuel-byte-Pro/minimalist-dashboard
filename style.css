@@ -1,6 +1,6 @@
 :root {
     --bg-color: #f0f0f0;
-    --widget-bg-color: #fff;
+    --widget-bg-color: rgba(255, 255, 255, 0.7);
     --text-color: #333;
     --border-color: #eee;
     --input-border-color: #ccc;
@@ -17,7 +17,7 @@
 
 body.dark-mode {
     --bg-color: #121212;
-    --widget-bg-color: #1e1e1e;
+    --widget-bg-color: rgba(30, 30, 30, 0.7);
     --text-color: #e0e0e0;
     --border-color: #333;
     --input-border-color: #555;
@@ -29,10 +29,25 @@ body.dark-mode {
 }
 
 body {
-    background-color: var(--bg-color);
+    background-image: url('https://images.unsplash.com/photo-1622737133809-d95047b9e673');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     color: var(--text-color);
     font-family: sans-serif;
     transition: background-color 0.3s, color 0.3s;
+}
+
+.main-header {
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+#valeo-logo {
+    width: 100px;
 }
 
 .controls-container {
@@ -63,6 +78,9 @@ body {
 
 .widget {
     background-color: var(--widget-bg-color);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px var(--shadow-color);
